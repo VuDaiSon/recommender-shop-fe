@@ -65,15 +65,19 @@ function Login() {
 
   // 🔥 FORGOT PASSWORD
   const handleForgot = async () => {
+    if (loading) return; // chống spam
+
     try {
       setLoading(true);
       setMessage("");
 
       await authApi.forgotPassword(forgotEmail);
 
-      setMessage("Đã gửi email! Hãy kiểm tra hộp thư của bạn.");
+      setMessage(
+        "📩 Đã gửi email reset. Hãy kiểm tra Inbox hoặc Spam/Junk nếu không thấy!",
+      );
     } catch (err) {
-      setMessage(err.response?.data?.message || "Có lỗi xảy ra, thử lại!");
+      setMessage(err.response?.data?.message || "❌ Có lỗi xảy ra, thử lại!");
     } finally {
       setLoading(false);
     }
